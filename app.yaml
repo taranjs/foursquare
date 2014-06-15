@@ -1,5 +1,5 @@
 application: s~loyal-radar-13
-version: foursquare
+version: foursquare2
 runtime: python27
 api_version: 1
 threadsafe: yes

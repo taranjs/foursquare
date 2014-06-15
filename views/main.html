@@ -1,28 +1,39 @@
 <div class="jumbotron">
-<input type="text" ng-model="main.postcode" placeholder="Enter city eg. London"/>
-  <span><a class="btn btn-lg btn-success" ng-href="#" ng-click="main.search()"><span class="glyphicon glyphicon-search"></span></a></span>
+Find <input type="text" ng-model="main.query" placeholder="cuisine eg. pizza"/> restaurants near <input type="text" ng-model="main.postcode" placeholder="location eg. London"/>
+  <span><a class="btn btn-lg btn-success" ng-href="#" ng-click="main.search()"><span ng-hide="loading" class="glyphicon glyphicon-search"></span><span ng-show="loading" class="glyphicon glyphicon-refresh"></span></a></span>
 </div>
 
 <div class="row">
 <div class="col-sm-3 nav" ng-show="items.length > 0">
   
   <ul>
-    <li ng-class="{'odd': $odd,'even' : $even}" ng-repeat="item in items">
+    <li ng-class="{'odd': $odd,'even' : $even}" ng-click="locate(item.venue)" ng-repeat="item in items">
+    <img ng-show="item.venue.photos.count" src="{{item.venue.photos.groups[0].items[0].prefix + '50x50' + item.venue.photos.groups[0].items[0].suffix}}" />
       <h6><a href="{{item.venue.url}}" target="_blank">{{ item.venue.name }}</a></h6>
+      <h6>{{ item.venue.location.address|| item.venue.location.crossStreet }} {{ item.venue.location.postalCode }}</h6>
       <h6> {{ item.venue.likes.count }} <span class="glyphicon glyphicon-thumbs-up"></span></h6>
-      <span class="rating"><span class="rating-fill" style="width:{{item.venue.rating * 10}}%">Rating: {{item.venue.rating}}</span></span>
-
+      <span class="rating" ng-show="item.venue.rating"><span class="rating-fill" style="width:{{item.venue.rating * 10}}%">Rating: {{item.venue.rating}}</span></span>
     </li>
-
   </ul>
 </div>
-<div class="col-sm-9 map" ng-show="items.length > 0">  
-<google-map center="map.center" zoom="map.zoom">
 
-<marker ng-repeat="item in items" coords='{"id":$index,"latitude":item.venue.location.lat,"longitude":item.venue.location.lng,"showWindow":true,"title":item.venue.location.address}' options='{"title":item.venue.location.address}'></marker>
-
-</google-map>
-
+<div class="col-sm-9 map" ng-show="items.length > 0"> 
+<div id="cloak-map" ng-hide="showMap"></div>
+<div id="current-venue" ng-show="currentVenue">
+   <h6>{{ currentVenue.name }}</h6>
+   <h6><a href="{{currentVenue.menu.url}}" target="_blank">Menu</a> | <a href="{{currentVenue.url}}" target="_blank">Website</a></h6>
+      <h6>{{ currentVenue.location.address || currentVenue.location.crossStreet }} {{ currentVenue.location.postalCode }}</h6>
+      <h6><span class="glyphicon glyphicon-phone"></span>{{currentVenue.contact.formattedPhone}}</h6>
+</div>
+<div>
+  <google-map center="map.center" zoom="map.zoom" control="map.control" draggable="map.draggable" pan="map.pan" events="map.events" options="map.options">
+    <marker ng-repeat="item in items" coords='{"id":$index,"latitude":item.venue.location.lat,"longitude":item.venue.location.lng,"showWindow":true,"title":item.venue.location.address}' options='{"title":item.venue.location.address, "draggable": true}' events="marker.events">
+      <window options='infoWindow.options'>
+        <span>{{item.venue.name}} <a href="{{item.venue.menu.url}}" target="_blank">Menu</a> <a href="{{item.venue.url}}" target="_blank">Website</a> </span>
+    </window>
+    </marker>
+  </google-map>
+</div>
 </div>
 
 </div>
