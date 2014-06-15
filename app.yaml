@@ -1,0 +1,29 @@
+application: s~loyal-radar-13
+version: foursquare
+runtime: python27
+api_version: 1
+threadsafe: yes
+
+handlers:
+- url: /
+  static_files: index.html
+  upload: index.html
+
+- url: /fonts
+  static_dir: fonts
+
+- url: /scripts
+  static_dir: scripts
+
+- url: /bower_components
+  static_dir: bower_components
+
+- url: /styles
+  static_dir: styles
+
+- url: /views
+  static_dir: views
+
+libraries:
+- name: webapp2
+  version: "2.5.2"

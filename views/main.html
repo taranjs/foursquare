@@ -1,0 +1,28 @@
+<div class="jumbotron">
+<input type="text" ng-model="main.postcode" placeholder="Enter city eg. London"/>
+  <span><a class="btn btn-lg btn-success" ng-href="#" ng-click="main.search()"><span class="glyphicon glyphicon-search"></span></a></span>
+</div>
+
+<div class="row">
+<div class="col-sm-3 nav" ng-show="items.length > 0">
+  
+  <ul>
+    <li ng-class="{'odd': $odd,'even' : $even}" ng-repeat="item in items">
+      <h6><a href="{{item.venue.url}}" target="_blank">{{ item.venue.name }}</a></h6>
+      <h6> {{ item.venue.likes.count }} <span class="glyphicon glyphicon-thumbs-up"></span></h6>
+      <span class="rating"><span class="rating-fill" style="width:{{item.venue.rating * 10}}%">Rating: {{item.venue.rating}}</span></span>
+
+    </li>
+
+  </ul>
+</div>
+<div class="col-sm-9 map" ng-show="items.length > 0">  
+<google-map center="map.center" zoom="map.zoom">
+
+<marker ng-repeat="item in items" coords='{"id":$index,"latitude":item.venue.location.lat,"longitude":item.venue.location.lng,"showWindow":true,"title":item.venue.location.address}' options='{"title":item.venue.location.address}'></marker>
+
+</google-map>
+
+</div>
+
+</div>

@@ -1,0 +1,34 @@
+.jumbotron {
+
+}
+.rating-fill {
+	background-color: #5cb85c;
+	display: block;
+	height: 15px;
+	font-size: smaller;
+	color: white;
+}
+.angular-google-map-container { height: 400px; }
+
+.map {
+	background-color: #eee;
+}
+
+.nav {
+}
+
+.map, .nav {
+	min-height: 100px;
+}
+
+li {
+	list-style-type: none;
+	padding-bottom: 20px;
+}
+li.odd {
+	background-color: #;
+}
+li.even {
+	background-color: #;
+}
+}
